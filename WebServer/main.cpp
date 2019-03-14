@@ -121,13 +121,7 @@ void handle_events(int epoll_fd, int event_num, int listenfd, epoll_event *event
 			acceptConnection(listenfd, epoll_fd, path);
 		}
 		else
-		{   
-			if ((events[i].events & EPOLLERR) || (events[i].events & EPOLLHUP) || (!(events[i].events & EPOLLIN)))
-			{
-				printf("event error!!!\n");
-				delete request;
-				continue;
-			}
+		{
 			//requestData数据已经可读，不再定时
 			request->seperateTimer();
 			threadpool_add(tp, myHandle, events[i].data.ptr, 0);
